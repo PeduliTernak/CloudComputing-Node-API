@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 
-const middleware = require('./utils/middleware')
+const errors = require('./middleware/errors')
 const usersRouter = require('./controllers/users')
 const predictionRouter = require('./controllers/prediction')
 
@@ -14,8 +14,8 @@ app.get('/', (request, response) => response.json({ status: 'OK' }))
 app.use('/api/user', usersRouter)
 app.use('/api/prediction', predictionRouter)
 
-app.use(middleware.errorHandler)
-app.use(middleware.unknownEndpoint)
+app.use(errors.errorHandler)
+app.use(errors.unknownEndpoint)
 
 const PORT = process.env.PORT || 8080
 
