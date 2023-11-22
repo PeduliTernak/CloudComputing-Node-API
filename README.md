@@ -8,8 +8,8 @@ Base URL: *soon*
 
 | Route | HTTP Method | Description | Token Required?
 | - | - | - | :-:
-| /api/register       | POST | Sign up a new user |
-| /api/login          | POST | Login user |
+| /api/register       | POST | Sign up a new user | -
+| /api/login          | POST | Login user | -
 | /api/users          | GET | Get user data | Yes
 | /api/users          | PUT | Change user data | Yes
 | /api/users          | DELETE | Delete user | Yes
@@ -20,7 +20,7 @@ Base URL: *soon*
 
 ### Token Authorization
 
-You will receive the token after succesfully request to `/api/register` or `/api/login`
+You will receive the token after succesfully request to `/api/register` or `/api/login`.
 
 #### Usage
 
@@ -138,6 +138,13 @@ Otherwise, the request will response 401 Unauthorized
         "name": "John Doe",
         "no_telepon": "6285123456",
       }
+    }
+
+- **Status: 404 Not Found**
+    ```json
+    {
+      "status": false,
+      "error": "user not found"
     }
     ```
 
