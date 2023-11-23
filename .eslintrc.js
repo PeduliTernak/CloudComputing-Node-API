@@ -24,5 +24,8 @@ module.exports = {
   rules: {
     semi: ['error', 'never'],
     'no-console': 'off',
+    'import/no-extraneous-dependencies': ['off', {
+      peerDependencies: false,
+    }],
   },
 }

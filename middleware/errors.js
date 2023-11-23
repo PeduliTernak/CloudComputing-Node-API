@@ -1,7 +1,3 @@
-const errorHandler = (error, request, response, next) => {
-  next(error)
-}
-
 const unknownEndpoint = (request, response) => {
   response.status(400).send({
     status: false,
@@ -10,6 +6,5 @@ const unknownEndpoint = (request, response) => {
 }
 
 module.exports = {
-  errorHandler,
   unknownEndpoint,
 }
