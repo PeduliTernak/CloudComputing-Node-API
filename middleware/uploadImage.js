@@ -1,4 +1,4 @@
-const uploadImage = (error, request, response, next) => {
+const uploadImage = (request, response, next) => {
   next()
 }
 
