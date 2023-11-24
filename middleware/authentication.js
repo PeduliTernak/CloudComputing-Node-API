@@ -40,9 +40,10 @@ const tokenValidator = async (request, response, next) => {
   // Check if username is exist or not in the Database
   const data = (await db.collection('users').doc(decodedToken.username).get()).data()
   if (data === undefined) {
-    response.status(409).json({
+    response.status(400).json({
       status: false,
-      error: 'username is already exist',
+      error: 'unauthorized access',
+      message: 'user not found',
     })
     return
   }

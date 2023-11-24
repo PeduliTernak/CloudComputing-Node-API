@@ -177,14 +177,6 @@ Otherwise, the request will response 401 Unauthorized
       }
     }
 
-- **Status: 404 Not Found**
-    ```json
-    {
-      "status": false,
-      "error": "user not found"
-    }
-    ```
-
 ------------------------------------------------------
 
 #### **PUT `/api/users` - Change user data**
@@ -192,7 +184,7 @@ Otherwise, the request will response 401 Unauthorized
 ##### Request
 - **Method:** PUT
 - **Path:** `/api/users`
-- **Body:**
+- **Body:** *(no need to specify all fields)*
     ```json
     {
       "name": "Updated Name",
@@ -206,7 +198,12 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": true,
-      "message": "user data updated successfully"
+      "message": "user data updated successfully",
+      "user": {
+        "username": "john_doe",
+        "name": "Updated Name",
+        "noTelepon": "6285123456",
+      }
     }
     ```
 
