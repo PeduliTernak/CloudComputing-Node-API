@@ -1,5 +1,24 @@
 #
 
+## How to Use
+
+1. Place Firestore service account in the root directory named `firestore.json`
+
+2. Add this values to Environment Variables or file `.env`
+
+    ```bash
+    FIRESTORE_PROJECT_ID=your-GCP-project-id
+    FIRESTORE_SERVICE_ACCOUNT_KEY_FILE=firestore.json
+    SECRET=something-secret
+    ```
+
+3. Start the application
+
+    ```bash
+    npm install
+    npm start
+    ```
+
 ## API Documentation
 
 ### Summary
