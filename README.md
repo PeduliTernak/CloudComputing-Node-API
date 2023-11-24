@@ -56,7 +56,7 @@ Otherwise, the request will response 401 Unauthorized
     {
       "username": "john_doe",
       "name": "John Doe",
-      "no_telepon": "6285123456",
+      "noTelepon": "6285123456",
       "password": "password123"
     }
     ```
@@ -70,7 +70,7 @@ Otherwise, the request will response 401 Unauthorized
       "user": {
         "username": "john_doe",
         "name": "John Doe",
-        "no_telepon": "6285123456",
+        "noTelepon": "6285123456",
       }
     }
     ```
@@ -107,7 +107,7 @@ Otherwise, the request will response 401 Unauthorized
       "user": {
         "username": "john_doe",
         "name": "John Doe",
-        "no_telepon": "6285123456",
+        "noTelepon": "6285123456",
       }
     }
     ```
@@ -136,7 +136,7 @@ Otherwise, the request will response 401 Unauthorized
       "user": {
         "username": "john_doe",
         "name": "John Doe",
-        "no_telepon": "6285123456",
+        "noTelepon": "6285123456",
       }
     }
 
@@ -159,7 +159,7 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "name": "Updated Name",
-      "no_telepon": "6285123456",
+      "noTelepon": "6285123456",
       "password": "new_password"
     }
     ```
