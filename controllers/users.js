@@ -1,6 +1,7 @@
 const usersRouter = require('express').Router()
+const { tokenValidator } = require('../middleware/authentication')
 
-usersRouter.get('/', async (request, response) => {
+usersRouter.get('/', tokenValidator, async (request, response) => {
   const col = request.db.collection('users')
   const snapshot = await col.get()
 

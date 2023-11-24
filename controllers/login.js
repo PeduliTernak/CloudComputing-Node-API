@@ -114,4 +114,7 @@ loginRouter.post('/login', async (request, response) => {
   })
 })
 
+loginRouter.all('/register', (_, res) => res.status(400).json({ msg: 'method not allowed' }))
+loginRouter.all('/login', (_, res) => res.status(400).json({ msg: 'method not allowed' }))
+
 module.exports = loginRouter
