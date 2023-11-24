@@ -4,7 +4,7 @@ const cors = require('cors')
 const errors = require('./middleware/errors')
 const usersRouter = require('./controllers/users')
 const predictionRouter = require('./controllers/prediction')
-const pool = require('./database/db')
+const db = require('./database/firestore')
 
 const app = express()
 
@@ -13,7 +13,7 @@ app.use(express.json())
 
 // Pass the pool to all routers
 app.use((request, response, next) => {
-  request.pool = pool
+  request.db = db
   next()
 })
 

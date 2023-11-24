@@ -30,7 +30,7 @@ const tokenValidator = (request, response, next) => {
     })
     return
   }
-
+  // TODO: request.username = username from database (recheck)
   request.username = decodedToken.username
   next()
 }

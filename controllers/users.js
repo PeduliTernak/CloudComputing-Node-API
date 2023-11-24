@@ -1,10 +1,17 @@
 const usersRouter = require('express').Router()
 
-usersRouter.get('/', (request, response) => {
-  request.pool.query('SELECT * FROM user WHERE username = ?', ['john_doe'], (err, rows, field) => {
-    console.log(rows)
-    console.log(field)
-    response.json({ user: rows[0] })
+usersRouter.get('/', async (request, response) => {
+  const col = request.db.collection('users')
+  const snapshot = await col.get()
+
+  const data = []
+  snapshot.forEach((doc) => {
+    data.push({ id: doc.id, ...doc.data() })
+  })
+
+  return response.json({
+    status: true,
+    users: data,
   })
 })
 
