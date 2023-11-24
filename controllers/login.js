@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const loginRouter = require('express').Router()
 
+const db = require('../database/firestore')
+
 const createToken = ({ id, username }) => {
   const token = jwt.sign({ id, username }, process.env.SECRET, { expiresIn: '90d' })
   return token
@@ -22,7 +24,7 @@ loginRouter.post('/register', async (request, response) => {
   }
 
   // Check if username is already exist in the database
-  const data = (await request.db.collection('users').doc(username).get()).data()
+  const data = (await db.collection('users').doc(username).get()).data()
   if (data !== undefined) {
     return response.status(409).json({
       status: false,
@@ -38,7 +40,7 @@ loginRouter.post('/register', async (request, response) => {
   const newUser = {
     username, name, noTelepon, passwordHash,
   }
-  const usersCol = request.db.collection('users')
+  const usersCol = db.collection('users')
   await usersCol.doc(username).set(newUser)
 
   // Create Token
@@ -72,7 +74,7 @@ loginRouter.post('/login', async (request, response) => {
   }
 
   // Check username and password validity from Body
-  const col = request.db.collection('users')
+  const col = db.collection('users')
   const snapshot = await col.get()
   let user
   snapshot.forEach((doc) => {

@@ -1,6 +1,8 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
+const db = require('../database/firestore')
+
 const tokenValidator = async (request, response, next) => {
   // Get token from Request Header
   const authorization = request.get('authorization')
@@ -36,7 +38,7 @@ const tokenValidator = async (request, response, next) => {
   }
 
   // Check if username is exist or not in the Database
-  const data = (await request.db.collection('users').doc(decodedToken.username).get()).data()
+  const data = (await db.collection('users').doc(decodedToken.username).get()).data()
   if (data === undefined) {
     response.status(409).json({
       status: false,

@@ -1,8 +1,10 @@
 const usersRouter = require('express').Router()
+
 const { tokenValidator } = require('../middleware/authentication')
+const db = require('../database/firestore')
 
 usersRouter.get('/', tokenValidator, async (request, response) => {
-  const col = request.db.collection('users')
+  const col = db.collection('users')
   const snapshot = await col.get()
 
   const data = []
