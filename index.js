@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 
 const errors = require('./middleware/errors')
+const loginRouter = require('./controllers/login')
 const usersRouter = require('./controllers/users')
 const predictionRouter = require('./controllers/prediction')
 const db = require('./database/firestore')
@@ -19,6 +20,7 @@ app.use((request, response, next) => {
 
 // Routes
 app.get('/', (request, response) => response.json({ status: 'OK' }))
+app.use('/api', loginRouter)
 app.use('/api/user', usersRouter)
 app.use('/api/prediction', predictionRouter)
 

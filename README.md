@@ -66,6 +66,7 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": true,
+      "message": "register success",
       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
       "user": {
         "username": "john_doe",
@@ -80,6 +81,14 @@ Otherwise, the request will response 401 Unauthorized
     {
       "status": false,
       "error": "invalid request argument"
+    }
+    ```
+
+- **Status: 409 Conflict**
+    ```json
+    {
+      "status": false,
+      "error": "username is already exist"
     }
     ```
 
@@ -103,6 +112,7 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": true,
+      "message": "login success",
       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
       "user": {
         "username": "john_doe",
@@ -113,6 +123,14 @@ Otherwise, the request will response 401 Unauthorized
     ```
 
 - **Status: 400 Bad Request**
+    ```json
+    {
+      "status": false,
+      "error": "invalid request argument"
+    }
+    ```
+
+- **Status: 401 Unauthorized**
     ```json
     {
       "status": false,
