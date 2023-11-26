@@ -66,4 +66,10 @@ usersRouter.put('/', tokenValidator, async (request, response) => {
   })
 })
 
+usersRouter.delete('/', tokenValidator, async (request, response) => {
+  const document = db.doc(`users/${request.user.username}`)
+  await document.delete()
+  return response.status(204).end()
+})
+
 module.exports = usersRouter

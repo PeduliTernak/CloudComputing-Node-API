@@ -29,10 +29,10 @@ Base URL: *soon*
 | - | - | - | :-:
 | /api/register       | POST | Sign up a new user | -
 | /api/login          | POST | Login user | -
-| /api/users          | GET | Get user data | Yes
-| /api/users          | PUT | Change user data | Yes
-| /api/users          | DELETE | Delete user | Yes
-| /api/prediction     | POST | Predict the image | Yes
+| /api/user           | GET | Get user data | Yes
+| /api/user           | PUT | Change user data | Yes
+| /api/user           | DELETE | Delete user | Yes
+| /api/prediction     | POST | Predict the image and save it to database | Yes
 | /api/prediction     | GET | Get all the user's prediction history | Yes
 | /api/prediction/:id | GET | Get prediction history by id | Yes
 | /api/prediction/:id | DELETE | Delete prediction history by id | Yes
@@ -159,11 +159,11 @@ Otherwise, the request will response 401 Unauthorized
 
 ------------------------------------------------------
 
-#### **GET `/api/users` - Get user data**
+#### **GET `/api/user` - Get user data**
 
 ##### Request
 - **Method:** GET
-- **Path:** `/api/users`
+- **Path:** `/api/user`
 
 ##### Response
 - **Status: 200 OK**
@@ -179,11 +179,11 @@ Otherwise, the request will response 401 Unauthorized
 
 ------------------------------------------------------
 
-#### **PUT `/api/users` - Change user data**
+#### **PUT `/api/user` - Change user data**
 
 ##### Request
 - **Method:** PUT
-- **Path:** `/api/users`
+- **Path:** `/api/user`
 - **Body:** *(no need to specify all fields)*
     ```json
     {
@@ -217,11 +217,11 @@ Otherwise, the request will response 401 Unauthorized
 
 ------------------------------------------------------
 
-#### **DELETE `/api/users` - Delete user**
+#### **DELETE `/api/user` - Delete user**
 
 ##### Request
 - **Method:** DELETE
-- **Path:** `/api/users`
+- **Path:** `/api/user`
 
 ##### Response
 - **Status: 204 No Content**
