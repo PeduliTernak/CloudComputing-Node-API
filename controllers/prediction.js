@@ -20,4 +20,16 @@ predictionRouter.post('/', tokenValidator, async (request, response) => {
   response.json({ prediksi: request.prediction })
 })
 
+predictionRouter.get('/', tokenValidator, async (request, response) => {
+  response.json({ method: 'get' })
+})
+
+predictionRouter.get('/:id', tokenValidator, async (request, response) => {
+  response.json({ method: 'get id' })
+})
+
+predictionRouter.delete('/', tokenValidator, async (request, response) => {
+  response.json({ method: 'delete' })
+})
+
 module.exports = predictionRouter
