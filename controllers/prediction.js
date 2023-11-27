@@ -1,9 +1,23 @@
 const predictionRouter = require('express').Router()
 
 const db = require('../database/firestore')
+const { tokenValidator } = require('../middleware/authentication')
 
-predictionRouter.get('/', (request, response) => {
-  response.json({ status: 'history' })
+predictionRouter.post('/', tokenValidator, async (request, response) => {
+  console.log(request.user)
+  request.prediction = 'penyakit1'
+
+  // upload GAMBAR ke cloud storage
+
+  // dapetin link gambarnya
+
+  await db.doc('predictionHistory/huruf-random').set({
+    idUser: db.doc(`users/${request.user.username}`),
+    imageUrl: 'https://storage.com/sapi.jpg',
+    predictionResult: request.prediction,
+  })
+
+  response.json({ prediksi: request.prediction })
 })
 
 module.exports = predictionRouter
