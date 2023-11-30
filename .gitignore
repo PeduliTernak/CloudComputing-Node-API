@@ -4,3 +4,4 @@ node_modules
 # service accounts
 firestore.json
 test-firestore.json
+cloudStorage.json

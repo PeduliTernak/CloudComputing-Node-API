@@ -1,6 +1,7 @@
 const predictionRouter = require('express').Router()
 
 const db = require('../database/firestore')
+const storage = require('../database/cloudstorage')
 const { tokenValidator } = require('../middleware/authentication')
 
 predictionRouter.post('/', tokenValidator, async (request, response) => {
