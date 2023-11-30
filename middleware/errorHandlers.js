@@ -17,10 +17,17 @@ const errorHandler = (error, request, response, next) => {
       error: 'token expired',
     })
   } else if (error.name === 'MulterError') {
-    response.status(400).json({
-      status: false,
-      error: 'please specify form-data with key:\'file\' and value:image.jpg',
-    })
+    if (error.message === 'Unexpected field') {
+      response.status(400).json({
+        status: false,
+        error: 'please specify form-data with \'file\' key',
+      })
+    } else if (error.message === 'File too large') {
+      response.status(400).json({
+        status: false,
+        error: 'maximum file is 3MB',
+      })
+    }
   }
   next(error)
 }

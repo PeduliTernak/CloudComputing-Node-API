@@ -17,7 +17,7 @@ predictionRouter.post('/', tokenValidator, upload.single('file'), async (request
   if (uploadedFile === undefined) {
     response.status(400).json({
       status: false,
-      error: 'please specify form-data with key:\'file\' and value:image.jpg',
+      error: 'please specify an image in form-data',
     })
     return
   }
