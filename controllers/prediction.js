@@ -2,6 +2,7 @@ const multer = require('multer')
 const predictionRouter = require('express').Router()
 
 const { tokenValidator } = require('../middleware/authentication')
+const { performImagePrediction } = require('../middleware/predictionService')
 
 // Multer configuration with memory storage
 // Limit 3MB
@@ -12,9 +13,9 @@ const upload = multer({
   },
 })
 
-predictionRouter.post('/', tokenValidator, upload.single('file'), async (request, response) => {
-  const uploadedFile = request.file
-  if (uploadedFile === undefined) {
+const steps = [tokenValidator, upload.single('file'), performImagePrediction]
+predictionRouter.post('/', steps, async (request, response) => {
+  if (request.file === undefined) {
     response.status(400).json({
       status: false,
       error: 'please specify an image in form-data',
@@ -23,8 +24,8 @@ predictionRouter.post('/', tokenValidator, upload.single('file'), async (request
   }
 
   response.json({
-    filename: uploadedFile.originalname,
-    size: uploadedFile.size,
+    status: true,
+    result: request.prediction,
   })
 })
 
