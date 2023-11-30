@@ -1,3 +1,5 @@
+require('express-async-errors')
+
 const express = require('express')
 const cors = require('cors')
 
@@ -17,6 +19,7 @@ app.use('/api/user', usersRouter)
 app.use('/api/prediction', predictionRouter)
 
 // Error Handlers
+app.use(errorHandlers.errorHandler)
 app.use(errorHandlers.unknownEndpoint)
 
 module.exports = app

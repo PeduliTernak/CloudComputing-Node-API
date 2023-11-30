@@ -4,45 +4,33 @@ const db = require('../database/firestore')
 const { SECRET } = require('../utils/config')
 
 const tokenValidator = async (request, response, next) => {
+  const unauthorizedJson = {
+    status: false,
+    error: 'unauthorized access',
+  }
+
   // Get token from Request Header
   const authorization = request.get('authorization')
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    response.status(401).json({
-      status: false,
-      error: 'unauthorized access',
-    })
+    response.status(401).json(unauthorizedJson)
     return
   }
   const token = authorization.replace('Bearer ', '')
 
   // Verify the token validity
   let decodedToken = {}
-  try {
-    decodedToken = jwt.verify(token, SECRET)
-  } catch (error) {
-    response.status(401).json({
-      status: false,
-      error: 'unauthorized access',
-      type: 'Invalid token',
-      message: error.message,
-    })
-    return
-  }
+  decodedToken = jwt.verify(token, SECRET)
 
   if (!decodedToken.username) {
-    response.status(401).json({
-      status: false,
-      error: 'unauthorized access',
-    })
+    response.status(401).json(unauthorizedJson)
     return
   }
 
   // Check if username is exist or not in the Database
   const data = (await db.collection('users').doc(decodedToken.username).get()).data()
   if (data === undefined) {
-    response.status(400).json({
-      status: false,
-      error: 'unauthorized access',
+    response.status(401).json({
+      ...unauthorizedJson,
       message: 'user not found',
     })
     return
