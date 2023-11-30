@@ -1,24 +1,31 @@
+const multer = require('multer')
 const predictionRouter = require('express').Router()
 
-const db = require('../database/firestore')
-const storage = require('../database/cloudstorage')
 const { tokenValidator } = require('../middleware/authentication')
 
-predictionRouter.post('/', tokenValidator, async (request, response) => {
-  console.log(request.user)
-  request.prediction = 'penyakit1'
+// Multer configuration with memory storage
+// Limit 3MB
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 3 * 1024 * 1024,
+  },
+})
 
-  // upload GAMBAR ke cloud storage
+predictionRouter.post('/', tokenValidator, upload.single('file'), async (request, response) => {
+  const uploadedFile = request.file
+  if (uploadedFile === undefined) {
+    response.status(400).json({
+      status: false,
+      error: 'please specify form-data with key:\'file\' and value:image.jpg',
+    })
+    return
+  }
 
-  // dapetin link gambarnya
-
-  await db.doc('predictionHistory/huruf-random').set({
-    idUser: db.doc(`users/${request.user.username}`),
-    imageUrl: 'https://storage.com/sapi.jpg',
-    predictionResult: request.prediction,
+  response.json({
+    filename: uploadedFile.originalname,
+    size: uploadedFile.size,
   })
-
-  response.json({ prediksi: request.prediction })
 })
 
 predictionRouter.get('/', tokenValidator, async (request, response) => {
