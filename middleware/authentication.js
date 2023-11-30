@@ -1,7 +1,7 @@
-require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
 const db = require('../database/firestore')
+const { SECRET } = require('../utils/config')
 
 const tokenValidator = async (request, response, next) => {
   // Get token from Request Header
@@ -18,7 +18,7 @@ const tokenValidator = async (request, response, next) => {
   // Verify the token validity
   let decodedToken = {}
   try {
-    decodedToken = jwt.verify(token, process.env.SECRET)
+    decodedToken = jwt.verify(token, SECRET)
   } catch (error) {
     response.status(401).json({
       status: false,

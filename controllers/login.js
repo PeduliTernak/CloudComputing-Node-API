@@ -1,12 +1,12 @@
-require('dotenv').config()
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const loginRouter = require('express').Router()
 
 const db = require('../database/firestore')
+const { SECRET } = require('../utils/config')
 
 const createToken = ({ id, username }) => {
-  const token = jwt.sign({ id, username }, process.env.SECRET, { expiresIn: '90d' })
+  const token = jwt.sign({ id, username }, SECRET, { expiresIn: '90d' })
   return token
 }
 
@@ -116,7 +116,7 @@ loginRouter.post('/login', async (request, response) => {
   })
 })
 
-loginRouter.all('/register', (_, res) => res.status(400).json({ msg: 'method not allowed' }))
-loginRouter.all('/login', (_, res) => res.status(400).json({ msg: 'method not allowed' }))
+loginRouter.all('/register', (_, res) => res.status(400).json({ message: 'method not allowed' }))
+loginRouter.all('/login', (_, res) => res.status(400).json({ message: 'method not allowed' }))
 
 module.exports = loginRouter

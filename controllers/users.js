@@ -1,9 +1,8 @@
-require('dotenv').config()
 const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 
-const { tokenValidator } = require('../middleware/authentication')
 const db = require('../database/firestore')
+const { tokenValidator } = require('../middleware/authentication')
 
 usersRouter.get('/all', tokenValidator, async (request, response) => {
   const col = db.collection('users')
