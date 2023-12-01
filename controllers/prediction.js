@@ -5,16 +5,16 @@ const { tokenValidator } = require('../middleware/authentication')
 const { performImagePrediction } = require('../middleware/predictionService')
 
 // Multer configuration with memory storage
-// Limit 3MB
+// Limit 5MB
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
-    fileSize: 3 * 1024 * 1024,
+    fileSize: 5 * 1024 * 1024,
   },
 })
 
-const steps = [tokenValidator, upload.single('file'), performImagePrediction]
-predictionRouter.post('/', steps, async (request, response) => {
+// Check uploaded file
+const checkFile = (request, response, next) => {
   if (request.file === undefined) {
     response.status(400).json({
       status: false,
@@ -22,7 +22,11 @@ predictionRouter.post('/', steps, async (request, response) => {
     })
     return
   }
+  next()
+}
 
+const steps = [tokenValidator, upload.single('file'), checkFile, performImagePrediction]
+predictionRouter.post('/', steps, async (request, response) => {
   response.json({
     status: true,
     result: request.prediction,
