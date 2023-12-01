@@ -2,7 +2,7 @@ const predictionRouter = require('express').Router()
 
 const db = require('../database/firestore')
 const { tokenValidator } = require('../middleware/authentication')
-const { multerUpload, checkFile } = require('../middleware/middleware')
+const { multerUpload, checkFile } = require('../middleware/multer')
 const { performImagePrediction } = require('../middleware/predictionService')
 const { uploadImage } = require('../middleware/cloudStorage')
 
@@ -22,8 +22,8 @@ predictionRouter.post('/', tokenValidator, steps, async (request, response) => {
   response.json({
     status: true,
     id: documentId,
-    predictionResult: request.prediction,
     imageUrl: data.imageUrl,
+    predictionResult: data.predictionResult,
   })
 })
 
