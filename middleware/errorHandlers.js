@@ -6,13 +6,28 @@ const unknownEndpoint = (request, response) => {
 }
 
 const errorHandler = (error, request, response, next) => {
-  console.error(error.message)
-  const errorJson = { status: false, error: error.message }
-
   if (error.name === 'JsonWebTokenError') {
-    response.status(400).json(errorJson)
+    response.status(400).json({
+      status: false,
+      error: error.message,
+    })
   } else if (error.name === 'TokenExpiredError') {
-    response.status(401).json({ ...errorJson, error: 'token expired' })
+    response.status(400).json({
+      status: false,
+      error: 'token expired',
+    })
+  } else if (error.name === 'MulterError') {
+    if (error.message === 'Unexpected field') {
+      response.status(400).json({
+        status: false,
+        error: 'please specify form-data with \'file\' key',
+      })
+    } else if (error.message === 'File too large') {
+      response.status(400).json({
+        status: false,
+        error: 'maximum file is 3MB',
+      })
+    }
   }
   next(error)
 }
