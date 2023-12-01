@@ -1,6 +1,7 @@
 const multer = require('multer')
 const predictionRouter = require('express').Router()
 
+const db = require('../database/firestore')
 const { tokenValidator } = require('../middleware/authentication')
 const { performImagePrediction } = require('../middleware/predictionService')
 
@@ -27,9 +28,18 @@ const checkFile = (request, response, next) => {
 
 const steps = [tokenValidator, upload.single('file'), checkFile, performImagePrediction]
 predictionRouter.post('/', steps, async (request, response) => {
+  const data = {
+    idUser: db.collection('users').doc(request.user.username),
+    imageUrl: 'UNIMPLEMENTED.image.jpg',
+    predictionResult: request.prediction.prediction,
+  }
+
+  await db.collection('predictionHistory').doc().set(data)
+
   response.json({
     status: true,
-    result: request.prediction,
+    predictionResult: request.prediction,
+    imageUrl: data.imageUrl,
   })
 })
 
