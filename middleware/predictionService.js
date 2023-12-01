@@ -3,11 +3,6 @@ const axios = require('axios')
 const { PREDICTION_MICRO_SERVICE_URL } = require('../utils/config')
 
 const performImagePrediction = async (request, response, next) => {
-  if (!request.file) {
-    next()
-    return
-  }
-
   try {
     // Convert the Buffer to a Blob
     const blobData = Buffer.from(request.file.buffer)
