@@ -6,10 +6,24 @@
 
 2. Add this values to Environment Variables or file `.env`
 
-    ```bash
-    FIRESTORE_PROJECT_ID=your-GCP-project-id
-    FIRESTORE_SERVICE_ACCOUNT_KEY_FILE=firestore.json
+    ```.env
+    PROJECT_ID=
+    FIRESTORE_SERVICE_ACCOUNT_KEY_FILE=
+    CLOUD_STORAGE_SERVICE_ACCOUNT_KEY_FILE=
+    BUCKET=
+    SECRET=
+    PREDICTION_MICRO_SERVICE_URL=
+    ```
+
+    for example:
+
+    ```.env
+    PROJECT_ID=your-project-id
+    FIRESTORE_SERVICE_ACCOUNT_KEY_FILE=firestore-sa.json
+    CLOUD_STORAGE_SERVICE_ACCOUNT_KEY_FILE=cloudStorage-sa.json
+    BUCKET=bucket-name
     SECRET=something-secret
+    PREDICTION_MICRO_SERVICE_URL=http://url.com/
     ```
 
 3. Start the application
@@ -36,6 +50,8 @@ Base URL: *soon*
 | /api/prediction     | GET | Get all the user's prediction history | Yes
 | /api/prediction/:id | GET | Get prediction history by id | Yes
 | /api/prediction/:id | DELETE | Delete prediction history by id | Yes
+
+*tip: just use `crtl+f`*
 
 ### Token Authorization
 
@@ -157,6 +173,7 @@ Otherwise, the request will response 401 Unauthorized
     }
     ```
 
+------------------------------------------------------
 ------------------------------------------------------
 
 #### **GET `/api/user` - Get user data**
