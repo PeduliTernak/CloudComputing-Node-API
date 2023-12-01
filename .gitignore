@@ -5,3 +5,4 @@ node_modules
 firestore.json
 test-firestore.json
 cloudStorage.json
+test-cloudStorage.json
