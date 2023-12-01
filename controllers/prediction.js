@@ -1,33 +1,14 @@
-const multer = require('multer')
 const predictionRouter = require('express').Router()
 
 const db = require('../database/firestore')
 const { tokenValidator } = require('../middleware/authentication')
+const { multerUpload, checkFile } = require('../middleware/middleware')
 const { performImagePrediction } = require('../middleware/predictionService')
 
-// Multer configuration with memory storage
-// Limit 5MB
-const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: {
-    fileSize: 5 * 1024 * 1024,
-  },
-})
-
-// Check uploaded file
-const checkFile = (request, response, next) => {
-  if (request.file === undefined) {
-    response.status(400).json({
-      status: false,
-      error: 'please specify an image in form-data',
-    })
-    return
-  }
-  next()
-}
-
-const steps = [tokenValidator, upload.single('file'), checkFile, performImagePrediction]
-predictionRouter.post('/', steps, async (request, response) => {
+const steps = [
+  multerUpload.single('file'), checkFile, performImagePrediction,
+]
+predictionRouter.post('/', tokenValidator, steps, async (request, response) => {
   const data = {
     idUser: db.collection('users').doc(request.user.username),
     imageUrl: 'UNIMPLEMENTED.image.jpg',
