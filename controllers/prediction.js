@@ -4,6 +4,7 @@ const db = require('../database/firestore')
 const { tokenValidator } = require('../middleware/authentication')
 const { multerUpload, checkFile } = require('../middleware/middleware')
 const { performImagePrediction } = require('../middleware/predictionService')
+const { generateRandomString } = require('../helpers/helpers')
 
 const steps = [
   multerUpload.single('file'), checkFile, performImagePrediction,
@@ -15,10 +16,12 @@ predictionRouter.post('/', tokenValidator, steps, async (request, response) => {
     predictionResult: request.prediction.prediction,
   }
 
-  await db.collection('predictionHistory').doc().set(data)
+  const documentId = `${request.user.username}-${generateRandomString(20)}`
+  await db.collection('predictionHistory').doc(documentId).set(data)
 
   response.json({
     status: true,
+    id: documentId,
     predictionResult: request.prediction,
     imageUrl: data.imageUrl,
   })
