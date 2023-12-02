@@ -18,6 +18,11 @@ const performImagePrediction = async (request, response, next) => {
     },
   })
 
+  // Check if contains error when predict the image
+  if (!predictionResult.data.status) {
+    throw new Error(predictionResult.data.error)
+  }
+
   // Store prediction result
   response.locals.prediction = predictionResult.data
 
