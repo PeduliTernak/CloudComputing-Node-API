@@ -2,20 +2,9 @@
 
 ## How to Use
 
-1. Place Firestore service account in the root directory named `firestore.json`
+1. Place Firestore and Cloud Storage service account key file in the root directory
 
 2. Add this values to Environment Variables or file `.env`
-
-    ```.env
-    PROJECT_ID=
-    FIRESTORE_SERVICE_ACCOUNT_KEY_FILE=
-    CLOUD_STORAGE_SERVICE_ACCOUNT_KEY_FILE=
-    BUCKET=
-    SECRET=
-    PREDICTION_MICRO_SERVICE_URL=
-    ```
-
-    for example:
 
     ```.env
     PROJECT_ID=your-project-id
