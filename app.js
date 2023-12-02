@@ -7,11 +7,13 @@ const loginRouter = require('./controllers/login')
 const usersRouter = require('./controllers/users')
 const predictionRouter = require('./controllers/prediction')
 const errorHandlers = require('./middleware/errorHandlers')
+const middleware = require('./middleware/middleware')
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
+app.get('/', middleware.home)
 
 // Routes
 app.use('/api', loginRouter)
