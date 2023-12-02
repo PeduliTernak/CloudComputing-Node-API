@@ -12,11 +12,11 @@ const steps = [
 predictionRouter.post('/', tokenValidator, steps, async (request, response) => {
   const data = {
     idUser: db.collection('users').doc(request.user.username),
-    imageUrl: request.storageObject.publicUrl,
-    predictionResult: request.prediction.prediction,
+    imageUrl: response.locals.storageObject.publicUrl,
+    predictionResult: response.locals.prediction.prediction,
   }
 
-  const documentId = `${request.user.username}-${request.storageObject.id}`
+  const documentId = `${request.user.username}-${response.locals.storageObject.id}`
   await db.collection('predictionHistory').doc(documentId).set(data)
 
   response.json({

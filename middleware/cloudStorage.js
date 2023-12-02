@@ -8,10 +8,8 @@ const uploadImage = async (request, response, next) => {
   try {
     // Create Unique ID and File Name for Object
     const id = generateRandomString(25)
-    request.storageObject = {}
-    request.storageObject.id = id
-    request.storageObject.fileName = `${request.user.username}-${id}-${request.file.originalname}`
-    const file = bucket.file(request.storageObject.fileName)
+    const fileName = `${request.user.username}-${id}-${request.file.originalname}`
+    const file = bucket.file(fileName)
 
     // Write Stream
     const stream = file.createWriteStream({
@@ -27,8 +25,12 @@ const uploadImage = async (request, response, next) => {
       stream.on('error', reject)
     })
 
-    // Store publicUrl
-    request.storageObject.publicUrl = `https://storage.googleapis.com/${BUCKET}/${request.storageObject.fileName}`
+    // Store data to response.locals
+    response.locals.storageObject = {
+      id,
+      fileName,
+      publicUrl: `https://storage.googleapis.com/${BUCKET}/${fileName}`,
+    }
     next()
   } catch (error) {
     console.error(error)

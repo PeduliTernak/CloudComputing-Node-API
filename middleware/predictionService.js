@@ -20,7 +20,7 @@ const performImagePrediction = async (request, response, next) => {
     })
 
     // Store prediction result
-    request.prediction = predictionResult.data
+    response.locals.prediction = predictionResult.data
 
     next()
   } catch (error) {
