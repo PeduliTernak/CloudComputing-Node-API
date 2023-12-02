@@ -25,6 +25,10 @@ const errorHandler = (error, request, response, next) => {
         message: 'maximum file size is 3MB',
       },
     },
+    FileNotImageError: {
+      status: 400,
+      message: 'please specify an image',
+    },
   }
 
   let errorInfo = errorMappings[error.name] || { status: 500, message: 'Internal Server Error' }
