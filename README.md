@@ -26,7 +26,7 @@
 
 ### Summary
 
-Base URL: *soon*
+Base URL: <https://node-api-74e64w7rga-et.a.run.app>
 
 | Route | HTTP Method | Description | Token Required?
 | - | - | - | :-:
