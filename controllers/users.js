@@ -4,6 +4,8 @@ const usersRouter = require('express').Router()
 const db = require('../database/firestore')
 const { tokenValidator } = require('../middleware/authentication')
 const { passwordValidator, noTeleponValidator } = require('../middleware/middleware')
+const { deleteImages } = require('../middleware/cloudStorage')
+const { BUCKET } = require('../utils/config')
 
 usersRouter.get('/all', tokenValidator, async (request, response) => {
   const col = db.collection('users')
@@ -81,9 +83,20 @@ usersRouter.delete('/', tokenValidator, async (request, response) => {
       return Promise.resolve()
     }
 
+    // Get all image names
+    const files = []
+    snapshot.forEach((doc) => {
+      const { imageUrl } = doc.data()
+      files.push(imageUrl.replace(`https://storage.googleapis.com/${BUCKET}/`, ''))
+    })
+
     // Promise to delete documents in a batch
     const batchPromises = snapshot.docs.map((doc) => db.batch().delete(doc.ref).commit())
-    return Promise.all(batchPromises)
+
+    // Promise to delete images in the bucket
+    const deletePromises = deleteImages(files)
+
+    return Promise.all(batchPromises, deletePromises)
   }
 
   await deleteQueryBatch()

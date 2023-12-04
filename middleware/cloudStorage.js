@@ -33,6 +33,13 @@ const uploadImage = async (request, response, next) => {
   next()
 }
 
+const deleteImages = (files) => {
+  // Return array of promises
+  const deletePromises = files.map((file) => bucket.file(file).delete())
+  return deletePromises
+}
+
 module.exports = {
   uploadImage,
+  deleteImages,
 }
