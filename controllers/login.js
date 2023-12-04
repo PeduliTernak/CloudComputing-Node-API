@@ -13,8 +13,10 @@ const createToken = ({ id, username }) => {
 
 loginRouter.post('/register', async (request, response) => {
   const {
-    username, name, noTelepon, password,
+    username, name, password,
   } = request.body
+
+  let { noTelepon } = request.body
 
   // Check given body
   if (!(username && name && noTelepon && password)) {
@@ -37,6 +39,10 @@ loginRouter.post('/register', async (request, response) => {
       status: false,
       error: 'invalid phone number',
     })
+  }
+
+  if (noTelepon.startsWith('+62')) {
+    noTelepon = noTelepon.replace('+62', '62')
   }
 
   // Check if username is already exist in the database
