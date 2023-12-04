@@ -3,6 +3,7 @@ const usersRouter = require('express').Router()
 
 const db = require('../database/firestore')
 const { tokenValidator } = require('../middleware/authentication')
+const { passwordValidator, noTeleponValidator } = require('../middleware/middleware')
 
 usersRouter.get('/all', tokenValidator, async (request, response) => {
   const col = db.collection('users')
@@ -30,7 +31,7 @@ usersRouter.get('/', tokenValidator, async (request, response) => {
   })
 })
 
-usersRouter.put('/', tokenValidator, async (request, response) => {
+usersRouter.put('/', tokenValidator, passwordValidator, noTeleponValidator, async (request, response) => {
   const { name, noTelepon, password } = request.body
 
   if (!name && !noTelepon && !password) {

@@ -4,19 +4,17 @@ const loginRouter = require('express').Router()
 
 const db = require('../database/firestore')
 const { SECRET } = require('../utils/config')
-const { isPasswordValid, isIndonesiaPhoneNumber } = require('../helpers/helpers')
+const { passwordValidator, noTeleponValidator } = require('../middleware/middleware')
 
 const createToken = ({ id, username }) => {
   const token = jwt.sign({ id, username }, SECRET, { expiresIn: '90d' })
   return token
 }
 
-loginRouter.post('/register', async (request, response) => {
+loginRouter.post('/register', passwordValidator, noTeleponValidator, async (request, response) => {
   const {
-    username, name, password,
+    username, name, password, noTelepon,
   } = request.body
-
-  let { noTelepon } = request.body
 
   // Check given body
   if (!(username && name && noTelepon && password)) {
@@ -24,25 +22,6 @@ loginRouter.post('/register', async (request, response) => {
       status: false,
       error: 'invalid request argument',
     })
-  }
-
-  // Password and Phone Number Validation
-  if (!isPasswordValid(password)) {
-    return response.status(400).json({
-      status: false,
-      error: 'invalid password',
-    })
-  }
-
-  if (!isIndonesiaPhoneNumber(noTelepon)) {
-    return response.status(400).json({
-      status: false,
-      error: 'invalid phone number',
-    })
-  }
-
-  if (noTelepon.startsWith('+62')) {
-    noTelepon = noTelepon.replace('+62', '62')
   }
 
   // Check if username is already exist in the database

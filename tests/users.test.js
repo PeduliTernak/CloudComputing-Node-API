@@ -9,6 +9,12 @@ const testUserCredentials = {
   password: 'testpassword',
 }
 
+const updatedUserData = {
+  name: 'Updated Name',
+  noTelepon: '62777777777',
+  password: 'newpassword',
+}
+
 beforeAll(async () => {
   // Delete 'testuser' user
   const doc = await db.collection('users').doc('testuser')
@@ -43,12 +49,6 @@ describe('Users API Tests', () => {
   })
 
   test('[PUT /api/user] Update user data', async () => {
-    const updatedUserData = {
-      name: 'Updated Name',
-      noTelepon: '9876543210',
-      password: 'newpassword',
-    }
-
     const response = await supertest(app)
       .put('/api/user')
       .set('Authorization', `Bearer ${testUserCredentials.token}`)
@@ -60,11 +60,37 @@ describe('Users API Tests', () => {
     expect(response.body.user).toBeDefined()
   })
 
-  test('[PUT /api/user] Update user data with invalid request', async () => {
+  test('[PUT /api/user] Update user data with no body', async () => {
     const response = await supertest(app)
       .put('/api/user')
       .set('Authorization', `Bearer ${testUserCredentials.token}`)
       .send({})
+
+    expect(response.statusCode).toBe(400)
+    expect(response.body.status).toBe(false)
+  })
+
+  test('[PUT /api/user] Update user data with invalid noTelpon', async () => {
+    const response = await supertest(app)
+      .put('/api/user')
+      .set('Authorization', `Bearer ${testUserCredentials.token}`)
+      .send({
+        ...updatedUserData,
+        noTelepon: '0',
+      })
+
+    expect(response.statusCode).toBe(400)
+    expect(response.body.status).toBe(false)
+  })
+
+  test('[PUT /api/user] Update user data with invalid password', async () => {
+    const response = await supertest(app)
+      .put('/api/user')
+      .set('Authorization', `Bearer ${testUserCredentials.token}`)
+      .send({
+        ...updatedUserData,
+        password: '0',
+      })
 
     expect(response.statusCode).toBe(400)
     expect(response.body.status).toBe(false)
