@@ -5,7 +5,7 @@ const db = require('../database/firestore')
 const testUserCredentials = {
   username: 'testuser',
   name: 'Test User',
-  noTelepon: '1234567890',
+  noTelepon: '628123456789',
   password: 'testpassword',
 }
 

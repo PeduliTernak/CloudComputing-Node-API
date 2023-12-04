@@ -3,8 +3,8 @@ const app = require('../app')
 const db = require('../database/firestore')
 
 const deleteUser = async () => {
-  const doc = await db.collection('users').doc('testuser')
-  doc.delete()
+  const doc = db.collection('users').doc('testuser')
+  await doc.delete()
 }
 
 beforeAll(() => deleteUser())
@@ -17,7 +17,7 @@ describe('Authentication API Tests (Register & Login)', () => {
       .send({
         username: 'testuser',
         name: 'Test User',
-        noTelepon: '1234567890',
+        noTelepon: '628123456789',
         password: 'testpassword',
       })
 
@@ -32,6 +32,34 @@ describe('Authentication API Tests (Register & Login)', () => {
       .post('/api/register')
       .send({
         username: 'testuser',
+      })
+
+    expect(response.statusCode).toBe(400)
+    expect(response.body.status).toBe(false)
+  })
+
+  test('[POST /api/register] Register with invalid password', async () => {
+    const response = await supertest(app)
+      .post('/api/register')
+      .send({
+        username: 'testuser',
+        name: 'Test User',
+        noTelepon: '628123456789',
+        password: '1',
+      })
+
+    expect(response.statusCode).toBe(400)
+    expect(response.body.status).toBe(false)
+  })
+
+  test('[POST /api/register] Register with invalid noTelepon', async () => {
+    const response = await supertest(app)
+      .post('/api/register')
+      .send({
+        username: 'testuser',
+        name: 'Test User',
+        noTelepon: '1',
+        password: 'testpassword',
       })
 
     expect(response.statusCode).toBe(400)

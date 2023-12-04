@@ -1,5 +1,4 @@
 node_modules/
-.ignore/
 .env
 
 # service accounts
@@ -7,3 +6,7 @@ firestore.json
 test-firestore.json
 cloudStorage.json
 test-cloudStorage.json
+
+# ignore
+.ignore/
+test-build.sh
