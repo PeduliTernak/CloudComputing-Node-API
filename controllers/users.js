@@ -66,8 +66,27 @@ usersRouter.put('/', tokenValidator, async (request, response) => {
 })
 
 usersRouter.delete('/', tokenValidator, async (request, response) => {
-  const document = db.doc(`users/${request.user.username}`)
-  await document.delete()
+  const user = db.collection('users').doc(request.user.username)
+  const query = db
+    .collection('predictionHistory')
+    .where('idUser', '==', db.collection('users').doc(request.user.username))
+
+  const deleteQueryBatch = async () => {
+    const snapshot = await query.get()
+    const batchSize = snapshot.size
+
+    // No documents to delete, return a resolved promise
+    if (batchSize === 0) {
+      return Promise.resolve()
+    }
+
+    // Promise to delete documents in a batch
+    const batchPromises = snapshot.docs.map((doc) => db.batch().delete(doc.ref).commit())
+    return Promise.all(batchPromises)
+  }
+
+  await deleteQueryBatch()
+  await user.delete()
   return response.status(204).end()
 })
 
