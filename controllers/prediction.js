@@ -4,7 +4,8 @@ const db = require('../database/firestore')
 const { tokenValidator } = require('../middleware/authentication')
 const { multerUpload, checkFile } = require('../middleware/multer')
 const { performImagePrediction } = require('../middleware/predictionService')
-const { uploadImage } = require('../middleware/cloudStorage')
+const { uploadImage, deleteImages } = require('../middleware/cloudStorage')
+const { getImageName } = require('../helpers/helpers')
 
 const steps = [
   multerUpload.single('file'),
@@ -53,8 +54,17 @@ predictionRouter.get('/', tokenValidator, async (request, response) => {
 predictionRouter.get('/:id', tokenValidator, async (request, response) => {
   const { id } = request.params
 
-  const doc = await db.collection('predictionHistory').doc(id).get()
-  const data = doc.data()
+  const docSnapshot = await db.collection('predictionHistory').doc(id).get()
+  const data = docSnapshot.data()
+
+  if (data === undefined) {
+    response.status(404).json({
+      status: true,
+      error: 'prediction id is not found',
+    })
+    return
+  }
+
   const { imageUrl, result } = data
 
   response.json({
@@ -65,8 +75,24 @@ predictionRouter.get('/:id', tokenValidator, async (request, response) => {
 
 predictionRouter.delete('/:id', tokenValidator, async (request, response) => {
   const { id } = request.params
+
   const doc = db.collection('predictionHistory').doc(id)
+  const docSnapshot = await doc.get()
+  const data = docSnapshot.data()
+
+  if (data === undefined) {
+    response.status(404).json({
+      status: true,
+      error: 'prediction id is not found',
+    })
+    return
+  }
+
+  const imageName = getImageName(data)
+
+  Promise.resolve(...deleteImages([imageName]))
   await doc.delete()
+
   response.status(204).end()
 })
 

@@ -1,3 +1,5 @@
+const { BUCKET } = require('../utils/config')
+
 const generateRandomString = (n) => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
   let randomString = ''
@@ -20,9 +22,15 @@ const isIndonesiaPhoneNumber = (phoneNumber) => {
   return noTelpRegex.test(phoneNumber) || noTelpRegexWithPlus.test(phoneNumber)
 }
 
+const getImageName = (predictionHistory, bucket = BUCKET) => {
+  const { imageUrl } = predictionHistory
+  return imageUrl.replace(`https://storage.googleapis.com/${bucket}/`, '')
+}
+
 module.exports = {
   generateRandomString,
   isASCIIOnly,
   isPasswordValid,
   isIndonesiaPhoneNumber,
+  getImageName,
 }
