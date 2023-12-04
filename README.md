@@ -4,6 +4,10 @@
 
 1. Place Firestore and Cloud Storage service account key file in the root directory
 
+    Roles:
+    - Firestore: Cloud Datastore User
+    - Cloud Storage: Cloud Storage Object User
+
 2. Add this values to Environment Variables or file `.env`
 
     ```.env
@@ -260,4 +264,115 @@ Otherwise, the request will response 401 Unauthorized
 
 ### Endpoints (Prediction)
 
-*soon*
+#### **POST `/api/prediction` - Predict the image and save it to the database**
+
+##### Request
+- **Method:** POST
+- **Path:** `/api/prediction`
+- **Body:**
+
+  - **Form-Data** with a **single file** field named `file`
+  - The file must be part of `image/*` mime types (an image like .jpg, .png)
+  - Maximum file size is 5 MB
+
+    ```yaml
+    "file": image.jpg
+    ```
+
+##### Response
+- **Status: 200 OK**
+    ```json
+    {
+      "status": true,
+      "prediction": {
+        "id": "john_doe-uniqueId",
+        "imageUrl": "https://storage.googleapis.com/bucketName/image.jpg",
+        "result": "prediction result"
+      }
+    }
+    ```
+
+- **Status: 400 Bad Request**
+    ```json
+    {
+      "status": false,
+      "error": "invalid request argument or file format"
+    }
+    ```
+
+------------------------------------------------------
+
+#### **GET `/api/prediction` - Get all the user's prediction history**
+
+##### Request
+- **Method:** GET
+- **Path:** `/api/prediction`
+
+##### Response
+- **Status: 200 OK**
+    ```yaml
+    {
+      "status": true,
+      "predictions": [
+        {
+          "id": "john_doe-uniqueId",
+          "imageUrl": "https://storage.googleapis.com/bucketName/image.jpg",
+          "result": "prediction result"
+        },
+        {
+          "id": "john_doe-uniqueId2",
+          "imageUrl": "https://storage.googleapis.com/bucketName/image2.jpg",
+          "result": "prediction result 2"
+        },
+        ... another results
+      ]
+    }
+    ```
+
+------------------------------------------------------
+
+#### **GET `/api/prediction/:id` - Get prediction history by id**
+
+##### Request
+- **Method:** GET
+- **Path:** `/api/prediction/:id`
+
+##### Response
+- **Status: 200 OK**
+    ```json
+    {
+      "status": true,
+      "prediction": {
+        "id": "john_doe-uniqueId",
+        "imageUrl": "https://storage.googleapis.com/bucketName/image.jpg",
+        "result": "prediction result"
+      }
+    }
+    ```
+
+- **Status: 404 Not Found**
+    ```json
+    {
+      "status": false,
+      "error": "prediction id is not found"
+    }
+    ```
+
+------------------------------------------------------
+
+#### **DELETE `/api/prediction/:id` - Delete prediction history by id**
+
+##### Request
+- **Method:** DELETE
+- **Path:** `/api/prediction/:id`
+
+##### Response
+- **Status: 204 No Content**
+
+- **Status: 404 Not Found**
+    ```json
+    {
+      "status": false,
+      "error": "prediction id is not found"
+    }
+    ```
