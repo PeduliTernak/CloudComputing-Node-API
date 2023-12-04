@@ -4,6 +4,7 @@ const loginRouter = require('express').Router()
 
 const db = require('../database/firestore')
 const { SECRET } = require('../utils/config')
+const { isPasswordValid, isIndonesiaPhoneNumber } = require('../helpers/helpers')
 
 const createToken = ({ id, username }) => {
   const token = jwt.sign({ id, username }, SECRET, { expiresIn: '90d' })
@@ -20,6 +21,21 @@ loginRouter.post('/register', async (request, response) => {
     return response.status(400).json({
       status: false,
       error: 'invalid request argument',
+    })
+  }
+
+  // Password and Phone Number Validation
+  if (!isPasswordValid(password)) {
+    return response.status(400).json({
+      status: false,
+      error: 'invalid password',
+    })
+  }
+
+  if (!isIndonesiaPhoneNumber(noTelepon)) {
+    return response.status(400).json({
+      status: false,
+      error: 'invalid phone number',
     })
   }
 

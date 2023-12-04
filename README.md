@@ -108,6 +108,29 @@ Otherwise, the request will response 401 Unauthorized
     }
     ```
 
+- **Status: 400 Bad Request**
+  - Password must at least 8 characters
+  - Password must be part of the ASCII character
+
+    ```json
+    {
+      "status": false,
+      "error": "invalid password"
+    }
+    ```
+
+- **Status: 400 Bad Request**
+  - Phone number must start with +62 or 62
+  - Phone number minimum length must be to 9 characters
+  - Phone number maximum length must be to 15 characters
+
+    ```json
+    {
+      "status": false,
+      "error": "invalid phone number"
+    }
+    ```
+
 - **Status: 409 Conflict**
     ```json
     {
