@@ -10,3 +10,4 @@ test-cloudStorage.json
 # ignore
 .ignore/
 test-build.sh
+tests/image.jpg

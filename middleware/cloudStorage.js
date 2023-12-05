@@ -39,7 +39,21 @@ const deleteImages = (files) => {
   return deletePromises
 }
 
+const isImageExistsInBucket = async (filename) => {
+  try {
+    // Check if the file exists in the bucket
+    const file = bucket.file(filename)
+    const [exists] = await file.exists()
+
+    return exists
+  } catch (error) {
+    console.error(`Error checking image existence in bucket: ${error.message}`)
+    return false
+  }
+}
+
 module.exports = {
   uploadImage,
   deleteImages,
+  isImageExistsInBucket,
 }

@@ -1,4 +1,4 @@
-#
+# PeduliTernak - Node.js Backend
 
 ## How to Use
 
@@ -24,6 +24,25 @@
     ```bash
     npm install
     npm start
+    ```
+
+## Testing
+
+1. Do all things on the [How to Use](#how-to-use) section (except `npm start`)
+2. Add test values to Environment Variables or file `.env` (or just keep the same values as *non-testing* variables above)
+
+    ```.env
+    TEST_PROJECT_ID=test-gcp-capstone
+    TEST_FIRESTORE_SERVICE_ACCOUNT_KEY_FILE=test-firestore-sa.json
+    TEST_CLOUD_STORAGE_SERVICE_ACCOUNT_KEY_FILE=test-cloudStorage-sa.json
+    TEST_BUCKET=test-bucket-name
+    ```
+
+3. Place an image on the `tests/` directory named `image.jpg` (to perform image recognition/prediction testing)
+4. Run the tests
+
+    ```bash
+    npm test
     ```
 
 ## API Documentation
@@ -72,7 +91,7 @@ Otherwise, the request will response 401 Unauthorized
 ------------------------------------------------------
 ------------------------------------------------------
 
-### Endpoints (User, Login, Register)
+### Endpoints (Login, Register)
 
 #### **POST `/api/register` - Sign up a new user**
 
@@ -191,6 +210,8 @@ Otherwise, the request will response 401 Unauthorized
 
 ------------------------------------------------------
 ------------------------------------------------------
+
+### Endpoints (User)
 
 #### **GET `/api/user` - Get user data**
 

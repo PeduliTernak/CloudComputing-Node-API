@@ -5,7 +5,7 @@ const db = require('../database/firestore')
 const { tokenValidator } = require('../middleware/authentication')
 const { passwordValidator, noTeleponValidator } = require('../middleware/middleware')
 const { deleteImages } = require('../middleware/cloudStorage')
-const { BUCKET } = require('../utils/config')
+const { getImageName } = require('../helpers/helpers')
 
 usersRouter.get('/all', tokenValidator, async (request, response) => {
   const col = db.collection('users')
@@ -86,8 +86,7 @@ usersRouter.delete('/', tokenValidator, async (request, response) => {
     // Get all image names
     const files = []
     snapshot.forEach((doc) => {
-      const { imageUrl } = doc.data()
-      files.push(imageUrl.replace(`https://storage.googleapis.com/${BUCKET}/`, ''))
+      getImageName(doc.data())
     })
 
     // Promise to delete documents in a batch

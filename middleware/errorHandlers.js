@@ -27,7 +27,7 @@ const errorHandler = (error, request, response, next) => {
     },
     FileNotImageError: {
       status: 400,
-      message: 'please specify an image',
+      message: error.message,
     },
   }
 
