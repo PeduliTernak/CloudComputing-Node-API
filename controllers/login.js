@@ -20,7 +20,7 @@ loginRouter.post('/register', passwordValidator, noTeleponValidator, async (requ
   if (!(username && name && noTelepon && password)) {
     return response.status(400).json({
       status: false,
-      error: 'invalid request argument',
+      message: 'invalid request argument',
     })
   }
 
@@ -29,7 +29,7 @@ loginRouter.post('/register', passwordValidator, noTeleponValidator, async (requ
   if (data !== undefined) {
     return response.status(409).json({
       status: false,
-      error: 'username is already exist',
+      message: 'username is already exist',
     })
   }
 
@@ -70,7 +70,7 @@ loginRouter.post('/login', async (request, response) => {
   if (!(username && password)) {
     return response.status(400).json({
       status: false,
-      error: 'invalid request argument',
+      message: 'invalid request argument',
     })
   }
 
@@ -86,7 +86,7 @@ loginRouter.post('/login', async (request, response) => {
   if (!user) {
     return response.status(400).json({
       status: false,
-      error: 'invalid username or password',
+      message: 'invalid username or password',
     })
   }
 
@@ -94,7 +94,7 @@ loginRouter.post('/login', async (request, response) => {
   if (!isPasswordCorrect) {
     return response.status(400).json({
       status: false,
-      error: 'invalid username or password',
+      message: 'invalid username or password',
     })
   }
 

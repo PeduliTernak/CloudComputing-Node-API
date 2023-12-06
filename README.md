@@ -84,7 +84,7 @@ Otherwise, the request will response 401 Unauthorized
 ```json
 {
   "status": false,
-  "error": "unauthorized access"
+  "message": "unauthorized access"
 }
 ```
 
@@ -127,7 +127,7 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": false,
-      "error": "invalid request argument"
+      "message": "invalid request argument"
     }
     ```
 
@@ -138,7 +138,7 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": false,
-      "error": "invalid password"
+      "message": "invalid password"
     }
     ```
 
@@ -150,7 +150,7 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": false,
-      "error": "invalid phone number"
+      "message": "invalid phone number"
     }
     ```
 
@@ -158,7 +158,7 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": false,
-      "error": "username is already exist"
+      "message": "username is already exist"
     }
     ```
 
@@ -196,7 +196,7 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": false,
-      "error": "invalid request argument"
+      "message": "invalid request argument"
     }
     ```
 
@@ -204,7 +204,7 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": false,
-      "error": "invalid username or password"
+      "message": "invalid username or password"
     }
     ```
 
@@ -265,7 +265,7 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": false,
-      "error": "invalid request argument"
+      "message": "invalid request argument"
     }
     ```
 
@@ -317,7 +317,7 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": false,
-      "error": "invalid request argument or file format"
+      "message": "invalid request argument or file format"
     }
     ```
 
@@ -375,7 +375,7 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": false,
-      "error": "prediction id is not found"
+      "message": "prediction id is not found"
     }
     ```
 
@@ -394,6 +394,6 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": false,
-      "error": "prediction id is not found"
+      "message": "prediction id is not found"
     }
     ```

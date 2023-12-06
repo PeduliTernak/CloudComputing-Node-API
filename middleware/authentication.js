@@ -6,7 +6,7 @@ const { SECRET } = require('../utils/config')
 const tokenValidator = async (request, response, next) => {
   const unauthorizedJson = {
     status: false,
-    error: 'unauthorized access',
+    message: 'unauthorized access',
   }
 
   // Get token from Request Header

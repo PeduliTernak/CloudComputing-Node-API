@@ -1,7 +1,7 @@
 const unknownEndpoint = (request, response) => {
   response.status(404).json({
     status: false,
-    error: 'unknown endpoint',
+    message: 'unknown endpoint',
   })
 }
 
@@ -40,7 +40,7 @@ const errorHandler = (error, request, response, next) => {
 
   response.status(errorInfo.status).json({
     status: false,
-    error: errorInfo.message,
+    message: errorInfo.message,
   })
 
   next(error)

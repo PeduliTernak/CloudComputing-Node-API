@@ -39,7 +39,7 @@ usersRouter.put('/', tokenValidator, passwordValidator, noTeleponValidator, asyn
   if (!name && !noTelepon && !password) {
     return response.status(400).json({
       status: false,
-      error: 'invalid request argument',
+      message: 'invalid request argument',
     })
   }
 

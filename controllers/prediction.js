@@ -60,7 +60,7 @@ predictionRouter.get('/:id', tokenValidator, async (request, response) => {
   if (data === undefined) {
     response.status(404).json({
       status: true,
-      error: 'prediction id is not found',
+      message: 'prediction id is not found',
     })
     return
   }
@@ -83,7 +83,7 @@ predictionRouter.delete('/:id', tokenValidator, async (request, response) => {
   if (data === undefined) {
     response.status(404).json({
       status: true,
-      error: 'prediction id is not found',
+      message: 'prediction id is not found',
     })
     return
   }

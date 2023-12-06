@@ -11,7 +11,7 @@ const passwordValidator = (request, response, next) => {
   if (!password || !isPasswordValid(password)) {
     response.status(400).json({
       status: false,
-      error: 'invalid password',
+      message: 'invalid password',
     })
     return
   }
@@ -25,7 +25,7 @@ const noTeleponValidator = (request, response, next) => {
   if (!noTelepon || !isIndonesiaPhoneNumber(noTelepon)) {
     response.status(400).json({
       status: false,
-      error: 'invalid phone number',
+      message: 'invalid phone number',
     })
     return
   }
