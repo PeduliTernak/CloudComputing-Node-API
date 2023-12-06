@@ -3,7 +3,11 @@ const usersRouter = require('express').Router()
 
 const db = require('../database/firestore')
 const { tokenValidator } = require('../middleware/authentication')
-const { passwordValidator, noTeleponValidator } = require('../middleware/middleware')
+const {
+  passwordValidator,
+  noTeleponValidator,
+  checkPhoneNumberExistence,
+} = require('../middleware/middleware')
 const { deleteImages } = require('../middleware/cloudStorage')
 const { getImageName } = require('../helpers/helpers')
 
@@ -33,7 +37,13 @@ usersRouter.get('/', tokenValidator, async (request, response) => {
   })
 })
 
-usersRouter.put('/', tokenValidator, passwordValidator, noTeleponValidator, async (request, response) => {
+const steps = [
+  tokenValidator,
+  passwordValidator,
+  noTeleponValidator,
+  checkPhoneNumberExistence,
+]
+usersRouter.put('/', steps, async (request, response) => {
   const { name, noTelepon, password } = request.body
 
   if (!name && !noTelepon && !password) {

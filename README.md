@@ -300,6 +300,14 @@ Otherwise, the request will response 401 Unauthorized
     }
     ```
 
+- **Status: 409 Conflict**
+    ```json
+    {
+      "status": false,
+      "message": "noTelepon is already exist"
+    }
+    ```
+
 ------------------------------------------------------
 
 #### **DELETE `/api/user` - Delete user**
