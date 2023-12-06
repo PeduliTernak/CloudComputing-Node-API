@@ -57,11 +57,11 @@ Base URL: <https://node-api-74e64w7rga-et.a.run.app>
 | /api/login          | POST | Login user | -
 | /api/user           | GET | Get user data | Yes
 | /api/user           | PUT | Change user data | Yes
-| /api/user           | DELETE | Delete user | Yes
+| /api/user           | DELETE | Delete user and all prediction history | Yes
 | /api/prediction     | POST | Predict the image and save it to database | Yes
 | /api/prediction     | GET | Get all the user's prediction history | Yes
-| /api/prediction/:id | GET | Get prediction history by id | Yes
-| /api/prediction/:id | DELETE | Delete prediction history by id | Yes
+| /api/prediction/:id | GET | Get one prediction history by id | Yes
+| /api/prediction/:id | DELETE | Delete one prediction history by id | Yes
 
 *tip: just use `crtl+f`*
 
@@ -310,7 +310,7 @@ Otherwise, the request will response 401 Unauthorized
 
 ------------------------------------------------------
 
-#### **DELETE `/api/user` - Delete user**
+#### **DELETE `/api/user` - Delete user and all prediction history**
 
 ##### Request
 - **Method:** DELETE
@@ -391,7 +391,7 @@ Otherwise, the request will response 401 Unauthorized
 
 ------------------------------------------------------
 
-#### **GET `/api/prediction/:id` - Get prediction history by id**
+#### **GET `/api/prediction/:id` - Get one prediction history by id**
 
 ##### Request
 - **Method:** GET
@@ -420,7 +420,7 @@ Otherwise, the request will response 401 Unauthorized
 
 ------------------------------------------------------
 
-#### **DELETE `/api/prediction/:id` - Delete prediction history by id**
+#### **DELETE `/api/prediction/:id` - Delete one prediction history by id**
 
 ##### Request
 - **Method:** DELETE
