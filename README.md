@@ -162,6 +162,14 @@ Otherwise, the request will response 401 Unauthorized
     }
     ```
 
+- **Status: 409 Conflict**
+    ```json
+    {
+      "status": false,
+      "message": "noTelepon is already exist"
+    }
+    ```
+
 ------------------------------------------------------
 
 #### **POST `/api/login` - Login user**
@@ -173,6 +181,13 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "username": "john_doe",
+      "password": "password123"
+    }
+    ```
+    or
+    ```json
+    {
+      "noTelepon": "6285123456",
       "password": "password123"
     }
     ```
@@ -204,7 +219,23 @@ Otherwise, the request will response 401 Unauthorized
     ```json
     {
       "status": false,
-      "message": "invalid username or password"
+      "message": "invalid username"
+    }
+    ```
+
+- **Status: 401 Unauthorized**
+    ```json
+    {
+      "status": false,
+      "message": "invalid noTelepon"
+    }
+    ```
+
+- **Status: 401 Unauthorized**
+    ```json
+    {
+      "status": false,
+      "message": "invalid password"
     }
     ```
 
