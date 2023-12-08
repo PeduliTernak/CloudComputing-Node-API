@@ -2,11 +2,12 @@
 
 ## How to Use
 
-1. Place Firestore and Cloud Storage service account key file in the root directory
+1. Place Firestore, Cloud Storage, and Cloud Run service account key file in the root directory
 
     Roles:
     - Firestore: Cloud Datastore User
     - Cloud Storage: Cloud Storage Object User
+    - Cloud Run: Cloud Run Invoker (service identity)
 
 2. Add this values to Environment Variables or file `.env`
 
@@ -14,6 +15,7 @@
     PROJECT_ID=your-project-id
     FIRESTORE_SERVICE_ACCOUNT_KEY_FILE=firestore-sa.json
     CLOUD_STORAGE_SERVICE_ACCOUNT_KEY_FILE=cloudStorage-sa.json
+    CLOUD_RUN_INVOKER_SERVICE_ACCOUNT_KEY_FILE=cloudRunInvoker-sa.json
     BUCKET=bucket-name
     SECRET=something-secret
     PREDICTION_MICRO_SERVICE_URL=http://url.com/
@@ -35,6 +37,7 @@
     TEST_PROJECT_ID=test-gcp-capstone
     TEST_FIRESTORE_SERVICE_ACCOUNT_KEY_FILE=test-firestore-sa.json
     TEST_CLOUD_STORAGE_SERVICE_ACCOUNT_KEY_FILE=test-cloudStorage-sa.json
+    TEST_CLOUD_RUN_INVOKER_SERVICE_ACCOUNT_KEY_FILE=cloudRunInvoker-sa.json
     TEST_BUCKET=test-bucket-name
     ```
 

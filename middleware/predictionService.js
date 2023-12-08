@@ -1,8 +1,18 @@
 const axios = require('axios')
 
-const { PREDICTION_MICRO_SERVICE_URL } = require('../utils/config')
+const {
+  PREDICTION_MICRO_SERVICE_URL,
+  CLOUD_RUN_INVOKER_SERVICE_ACCOUNT_KEY_FILE,
+} = require('../utils/config')
+const getAuthToken = require('../services/auth')
 
 const performImagePrediction = async (request, response, next) => {
+  // Get ID token to authenticate Cloud Run endpoint
+  const idToken = await getAuthToken(
+    PREDICTION_MICRO_SERVICE_URL,
+    CLOUD_RUN_INVOKER_SERVICE_ACCOUNT_KEY_FILE,
+  )
+
   // Convert the Buffer to a Blob
   const blobData = Buffer.from(request.file.buffer)
   const blob = new Blob([blobData], { type: request.file.mimetype })
@@ -14,6 +24,7 @@ const performImagePrediction = async (request, response, next) => {
   // Send request to Python-Flask app
   const predictionResult = await axios.post(PREDICTION_MICRO_SERVICE_URL, formData, {
     headers: {
+      Authorization: `Bearer ${idToken}`,
       'Content-Type': 'multipart/form-data',
     },
   })

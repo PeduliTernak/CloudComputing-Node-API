@@ -6,6 +6,8 @@ firestore.json
 test-firestore.json
 cloudStorage.json
 test-cloudStorage.json
+cloudRunInvoker.json
+test-cloudRunInvoker.json
 
 # ignore
 .ignore/
