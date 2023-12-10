@@ -1,16 +1,30 @@
 # PeduliTernak - Node.js Backend
 
+This repository contains the Node.js backend for the PeduliTernak project, specifically focused on Machine Learning Image Recognition Model Deployment. The backend allows users to create an account and **detect disease in cattle** (perform image predictions) using API request methods.
+
+## How it works
+
+This application is connected to the Firestore Database, Cloud Storage, and Cloud Run microservice.
+
+When a client makes prediction requests, this application synchronously sends requests to the [Cloud Run microservice](https://github.com/PeduliTernak/CloudComputing-Flask-API) to perform image recognition because the ML Model is deployed there. The results are then stored in the database.
+
+![Cloud Architecture Design](https://github.com/PeduliTernak/assets/blob/main/architecture-cloud-design.png?raw=true)
+
+more: [diagram](https://github.com/PeduliTernak/assets/blob/main/sequence-diagram.png)
+
 ## How to Use
 
-1. Place Firestore, Cloud Storage, and Cloud Run service account key file in the root directory
+1. Go to [Python-Flask Microservice](https://github.com/PeduliTernak/CloudComputing-Flask-API), start the Flask application, and get the Base URL
+
+1. Create and place Firestore, Cloud Storage, and Cloud Run service account key file in the root directory
 
    Roles:
 
    - **Firestore**: Cloud Datastore User
    - **Cloud Storage**: Cloud Storage Object User
-   - **Cloud Run**: Cloud Run Invoker (service identity)
+   - **Cloud Run**: Cloud Run Invoker (service identity applied to the Python-Flask Microservice in step 1)
 
-2. Add this values to Environment Variables or file `.env`
+1. Add this values to Environment Variables or file `.env`
 
    ```.env
    PROJECT_ID=your-project-id
@@ -19,14 +33,29 @@
    CLOUD_RUN_INVOKER_SERVICE_ACCOUNT_KEY_FILE=cloudRunInvoker-sa.json
    BUCKET=bucket-name
    SECRET=something-secret
-   PREDICTION_MICRO_SERVICE_URL=http://url.com/
+   PREDICTION_MICRO_SERVICE_URL=http://flask-base-url.com/
    ```
 
-3. Start the application
+   Note: the value of `PREDICTION_MICRO_SERVICE_URL` is the Base URL from step 1
+
+1. Start the application
 
    ```bash
    npm install
    npm start
+   ```
+
+## Deployment
+
+1. You needs to deploy [Python-Flask Microservice](https://github.com/PeduliTernak/CloudComputing-Flask-API) first, and get the Base URL
+
+1. Do all things on the [How to Use](#how-to-use) section (except "Start the application" section)
+
+1. Build the Docker image and run the Docker container, or [Deploy to Cloud Run](https://cloud.google.com/run/docs/deploying)
+
+   ```bash
+   docker build -t node-api .
+   docker run -p 8080:8080 -d node-api
    ```
 
 ## Testing
