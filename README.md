@@ -1,12 +1,12 @@
 # PeduliTernak - Node.js Backend
 
-This repository contains the Node.js backend for the PeduliTernak project, specifically focused on Machine Learning Image Recognition Model Deployment. The backend allows users to create an account and **detect disease in cattle** (perform image predictions) using API request methods.
+This repository contains the Node.js backend for the PeduliTernak project, encompassing implementation of public endpoints gateway, database connection, and user administration. The backend allows users to create an account and **detect disease in cattle** (perform image predictions) using API request methods.
 
 ## How it works
 
 This application is connected to the Firestore Database, Cloud Storage, and Cloud Run microservice.
 
-When a client makes prediction requests, this application synchronously sends requests to the private [Cloud Run microservice](https://github.com/PeduliTernak/CloudComputing-Flask-API) to perform image recognition because the ML Model is deployed there. The results are then stored in the database.
+When a client makes prediction requests, this application synchronously sends requests to the private [Cloud Run microservice](https://cloud.google.com/run/docs/authenticating/service-to-service) to perform image recognition (because the ML Model is deployed there). The results are then stored in the database and returned to the client as a response.
 
 ![Cloud Architecture Design](https://github.com/PeduliTernak/assets/blob/main/architecture-cloud-design.png?raw=true)
 
@@ -22,9 +22,9 @@ more: [diagram](https://github.com/PeduliTernak/assets/blob/main/sequence-diagra
 
    - **Firestore**: Cloud Datastore User
    - **Cloud Storage**: Cloud Storage Object User
-   - **Cloud Run**: Cloud Run Invoker (service identity applied to the Python-Flask Microservice in step 1)
+   - **Cloud Run**: Cloud Run Invoker (role applied to the Python-Flask Microservice as a service identity)
 
-   _Note: Cloud Run Invoker service account is optional in case you do not want to make the Python-Flask Microservice private_
+   _Note: Cloud Run Invoker service account is optional, in case you do not want to make the Python-Flask Microservice private_
 
 1. Add this values to Environment Variables or file `.env`
 
