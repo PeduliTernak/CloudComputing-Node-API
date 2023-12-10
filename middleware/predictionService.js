@@ -8,10 +8,16 @@ const getAuthToken = require('../services/auth')
 
 const performImagePrediction = async (request, response, next) => {
   // Get ID token to authenticate Cloud Run endpoint
-  const idToken = await getAuthToken(
-    PREDICTION_MICRO_SERVICE_URL,
-    CLOUD_RUN_INVOKER_SERVICE_ACCOUNT_KEY_FILE,
-  )
+  let idToken
+  try {
+    idToken = await getAuthToken(
+      PREDICTION_MICRO_SERVICE_URL,
+      CLOUD_RUN_INVOKER_SERVICE_ACCOUNT_KEY_FILE,
+    )
+  } catch (error) {
+    console.info('Note: Cloud Run Invoker service account is not specified.')
+    idToken = ''
+  }
 
   // Convert the Buffer to a Blob
   const blobData = Buffer.from(request.file.buffer)

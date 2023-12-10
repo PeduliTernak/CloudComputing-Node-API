@@ -6,7 +6,7 @@ This repository contains the Node.js backend for the PeduliTernak project, speci
 
 This application is connected to the Firestore Database, Cloud Storage, and Cloud Run microservice.
 
-When a client makes prediction requests, this application synchronously sends requests to the [Cloud Run microservice](https://github.com/PeduliTernak/CloudComputing-Flask-API) to perform image recognition because the ML Model is deployed there. The results are then stored in the database.
+When a client makes prediction requests, this application synchronously sends requests to the private [Cloud Run microservice](https://github.com/PeduliTernak/CloudComputing-Flask-API) to perform image recognition because the ML Model is deployed there. The results are then stored in the database.
 
 ![Cloud Architecture Design](https://github.com/PeduliTernak/assets/blob/main/architecture-cloud-design.png?raw=true)
 
@@ -24,6 +24,8 @@ more: [diagram](https://github.com/PeduliTernak/assets/blob/main/sequence-diagra
    - **Cloud Storage**: Cloud Storage Object User
    - **Cloud Run**: Cloud Run Invoker (service identity applied to the Python-Flask Microservice in step 1)
 
+   Note: Cloud Run Invoker service account is optional in case you do not want to make the Python-Flask Microservice private
+
 1. Add this values to Environment Variables or file `.env`
 
    ```.env
@@ -36,7 +38,10 @@ more: [diagram](https://github.com/PeduliTernak/assets/blob/main/sequence-diagra
    PREDICTION_MICRO_SERVICE_URL=http://flask-base-url.com/
    ```
 
-   Note: the value of `PREDICTION_MICRO_SERVICE_URL` is the Base URL from step 1
+   Note:
+
+   - the value of `PREDICTION_MICRO_SERVICE_URL` is the Base URL from step 1
+   - `CLOUD_RUN_INVOKER_SERVICE_ACCOUNT_KEY_FILE` is optional
 
 1. Start the application
 
