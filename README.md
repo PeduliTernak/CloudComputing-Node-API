@@ -24,7 +24,7 @@ more: [diagram](https://github.com/PeduliTernak/assets/blob/main/sequence-diagra
    - **Cloud Storage**: Cloud Storage Object User
    - **Cloud Run**: Cloud Run Invoker (service identity applied to the Python-Flask Microservice in step 1)
 
-   Note: Cloud Run Invoker service account is optional in case you do not want to make the Python-Flask Microservice private
+   _Note: Cloud Run Invoker service account is optional in case you do not want to make the Python-Flask Microservice private_
 
 1. Add this values to Environment Variables or file `.env`
 
@@ -38,10 +38,10 @@ more: [diagram](https://github.com/PeduliTernak/assets/blob/main/sequence-diagra
    PREDICTION_MICRO_SERVICE_URL=http://flask-base-url.com/
    ```
 
-   Note:
+   _Note:_
 
-   - the value of `PREDICTION_MICRO_SERVICE_URL` is the Base URL from step 1
-   - `CLOUD_RUN_INVOKER_SERVICE_ACCOUNT_KEY_FILE` is optional
+   - _the value of `PREDICTION_MICRO_SERVICE_URL` is the Base URL from step 1_
+   - _`CLOUD_RUN_INVOKER_SERVICE_ACCOUNT_KEY_FILE` is optional_
 
 1. Start the application
 
