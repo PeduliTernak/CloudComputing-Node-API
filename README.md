@@ -56,11 +56,17 @@ more: [diagram](https://github.com/PeduliTernak/assets/blob/main/sequence-diagra
 
 1. Do all things on the [How to Use](#how-to-use) section (except "Start the application" section)
 
-1. Build the Docker image and run the Docker container, or [Deploy to Cloud Run](https://cloud.google.com/run/docs/deploying)
+1. Build the Docker image and run the Docker container
 
    ```bash
    docker build -t node-api .
    docker run -p 8080:8080 -d node-api
+   ```
+
+   or [Deploy to Cloud Run](https://cloud.google.com/build/docs/deploying-builds/deploy-cloud-run) by configuring the `cloudbuild.yaml` and `.gcloudignore`, then submit it
+
+   ```bash
+   gcloud builds submit --config=cloudbuild.yaml
    ```
 
 ## Testing
