@@ -11,21 +11,6 @@ const {
 const { deleteImages } = require('../middleware/cloudStorage')
 const { getImageName } = require('../helpers/helpers')
 
-usersRouter.get('/all', tokenValidator, async (request, response) => {
-  const col = db.collection('users')
-  const snapshot = await col.get()
-
-  const data = []
-  snapshot.forEach((doc) => {
-    data.push({ id: doc.id, ...doc.data() })
-  })
-
-  return response.json({
-    status: true,
-    users: data,
-  })
-})
-
 usersRouter.get('/', tokenValidator, async (request, response) => {
   response.json({
     status: true,
