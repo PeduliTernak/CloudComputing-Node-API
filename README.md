@@ -471,7 +471,7 @@ Otherwise, the request will response 401 Unauthorized
               "penanganan":
                 [
                   "Menjaga kandang untuk tetap bersih. Memakai antiseptik ...",
-                  "Deskripsi penanganan dari penyakit 2",
+                  "Deskripsi penanganan untuk penyakit 2",
                 ],
             },
         },
@@ -480,13 +480,14 @@ Otherwise, the request will response 401 Unauthorized
           "imageUrl": "https://storage.googleapis.com/bucketName/image2.jpg",
           "result":
             {
-              "penyakit": ["Masitis", "Penyakit 2"],
-              "penanganan":
-                [
-                  "Menjaga kandang untuk tetap bersih. Memakai antiseptik ...",
-                  "Deskripsi penanganan dari penyakit 2",
-                ],
+              "penyakit": ["Penyakit 1"],
+              "penanganan": ["Deskripsi penanganan untuk penyakit 1"],
             },
+        },
+        {
+          "id": "john_doe-uniqueId3",
+          "imageUrl": "https://storage.googleapis.com/bucketName/image3.jpg",
+          "result": { "penyakit": [], "penanganan": [] },
         },
         ... another results,
       ],
