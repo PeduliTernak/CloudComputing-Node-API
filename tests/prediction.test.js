@@ -70,6 +70,10 @@ describe('Prediction Router', () => {
     expect(response.body.prediction).toHaveProperty('id')
     expect(response.body.prediction).toHaveProperty('imageUrl')
     expect(response.body.prediction).toHaveProperty('result')
+    expect(response.body.prediction.result).toHaveProperty('penyakit')
+    expect(response.body.prediction.result).toHaveProperty('penanganan')
+    expect(response.body.prediction.result.penyakit).toBeInstanceOf(Array)
+    expect(response.body.prediction.result.penanganan).toBeInstanceOf(Array)
 
     predictionResult.status = response.body.status
     predictionResult.prediction.id = response.body.prediction.id
@@ -80,6 +84,26 @@ describe('Prediction Router', () => {
     const isImageExists = await isImageExistsInBucket(getImageName(predictionResult.prediction))
     expect(isImageExists).toBe(true)
   }, 60000)
+
+  it('[POST /api/prediction] should return 400 no image', async () => {
+    const response = await supertest(app)
+      .post('/api/prediction')
+      .set('Authorization', `Bearer ${testUserCredentials.token}`)
+      .field('gejala_matrix', '[]')
+
+    expect(response.status).toBe(400)
+    expect(response.body.status).toBe(false)
+  })
+
+  it('[POST /api/prediction] should return 400 no matrix', async () => {
+    const response = await supertest(app)
+      .post('/api/prediction')
+      .set('Authorization', `Bearer ${testUserCredentials.token}`)
+      .attach('file', imagePath)
+
+    expect(response.status).toBe(400)
+    expect(response.body.status).toBe(false)
+  })
 
   it('[GET /api/prediction] should get all user\'s prediction history', async () => {
     const response = await supertest(app)
