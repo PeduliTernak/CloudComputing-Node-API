@@ -2,7 +2,7 @@ const predictionRouter = require('express').Router()
 
 const db = require('../database/firestore')
 const { tokenValidator } = require('../middleware/authentication')
-const { multerUpload, checkFile } = require('../middleware/multer')
+const { multerUpload, checkFile, checkMatrix } = require('../middleware/multer')
 const { performImagePrediction } = require('../middleware/predictionService')
 const { uploadImage, deleteImages } = require('../middleware/cloudStorage')
 const { getImageName } = require('../helpers/helpers')
@@ -10,6 +10,7 @@ const { getImageName } = require('../helpers/helpers')
 const steps = [
   multerUpload.single('file'),
   checkFile,
+  checkMatrix,
   performImagePrediction,
   uploadImage,
 ]

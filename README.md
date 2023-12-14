@@ -63,7 +63,7 @@ more: [diagram](https://github.com/PeduliTernak/assets/blob/main/sequence-diagra
    docker run -p 8080:8080 -d node-api
    ```
 
-   or [Deploy to Cloud Run](https://cloud.google.com/build/docs/deploying-builds/deploy-cloud-run) by configuring the `cloudbuild.yaml` and `.gcloudignore`, then submit it
+   or [Deploy to Cloud Run](https://cloud.google.com/build/docs/deploying-builds/deploy-cloud-run) by configuring the `cloudbuild.yaml` and [`.gcloudignore`](https://cloud.google.com/sdk/gcloud/reference/topic/gcloudignore), then submit it
 
    ```bash
    gcloud builds submit --config=cloudbuild.yaml
@@ -405,13 +405,20 @@ Otherwise, the request will response 401 Unauthorized
   - The file must be part of `image/*` mime types (an image like .jpg, .png)
   - Maximum file size is 5 MB
 
+  and
+
+  - **Form-Data** with a **string of list (matrix) of gejala penyakit** field named `gejala_matrix`
+
     ```yaml
     "file": image.jpg
+    "gejala_matrix": "[0, 0, 0, 0, 1, 1, 0, ...]"
     ```
 
 ##### Response
 
 - **Status: 200 OK**
+
+  Prediction result can be 0 or more.
 
   ```json
   {
@@ -419,7 +426,13 @@ Otherwise, the request will response 401 Unauthorized
     "prediction": {
       "id": "john_doe-uniqueId",
       "imageUrl": "https://storage.googleapis.com/bucketName/image.jpg",
-      "result": "prediction result"
+      "result": {
+        "penyakit": ["Masitis", "Penyakit 2"],
+        "penanganan": [
+          "Menjaga kandang untuk tetap bersih. Memakai antiseptik ...",
+          "Deskripsi penanganan dari penyakit 2"
+        ]
+      }
     }
   }
   ```
@@ -452,12 +465,28 @@ Otherwise, the request will response 401 Unauthorized
         {
           "id": "john_doe-uniqueId",
           "imageUrl": "https://storage.googleapis.com/bucketName/image.jpg",
-          "result": "prediction result",
+          "result":
+            {
+              "penyakit": ["Masitis", "Penyakit 2"],
+              "penanganan":
+                [
+                  "Menjaga kandang untuk tetap bersih. Memakai antiseptik ...",
+                  "Deskripsi penanganan dari penyakit 2",
+                ],
+            },
         },
         {
           "id": "john_doe-uniqueId2",
           "imageUrl": "https://storage.googleapis.com/bucketName/image2.jpg",
-          "result": "prediction result 2",
+          "result":
+            {
+              "penyakit": ["Masitis", "Penyakit 2"],
+              "penanganan":
+                [
+                  "Menjaga kandang untuk tetap bersih. Memakai antiseptik ...",
+                  "Deskripsi penanganan dari penyakit 2",
+                ],
+            },
         },
         ... another results,
       ],
@@ -483,7 +512,13 @@ Otherwise, the request will response 401 Unauthorized
     "prediction": {
       "id": "john_doe-uniqueId",
       "imageUrl": "https://storage.googleapis.com/bucketName/image.jpg",
-      "result": "prediction result"
+      "result": {
+        "penyakit": ["Masitis", "Penyakit 2"],
+        "penanganan": [
+          "Menjaga kandang untuk tetap bersih. Memakai antiseptik ...",
+          "Deskripsi penanganan dari penyakit 2"
+        ]
+      }
     }
   }
   ```

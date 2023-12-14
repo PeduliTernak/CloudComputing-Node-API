@@ -54,10 +54,16 @@ describe('Prediction Router', () => {
   }
 
   it('[POST /api/prediction] should predict the image and save it to the database', async () => {
+    const matrix = [
+      1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+      0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0,
+    ]
     const response = await supertest(app)
       .post('/api/prediction')
       .set('Authorization', `Bearer ${testUserCredentials.token}`)
       .attach('file', imagePath)
+      .field('gejala_matrix', JSON.stringify(matrix))
 
     expect(response.status).toBe(200)
     expect(response.body.status).toBe(true)

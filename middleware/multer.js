@@ -35,7 +35,19 @@ const checkFile = (request, response, next) => {
   next()
 }
 
+const checkMatrix = async (request, response, next) => {
+  if (!request.body.gejala_matrix) {
+    response.status(400).json({
+      status: false,
+      message: 'gejala matrix is missing',
+    })
+    return
+  }
+  next()
+}
+
 module.exports = {
   multerUpload,
   checkFile,
+  checkMatrix,
 }
