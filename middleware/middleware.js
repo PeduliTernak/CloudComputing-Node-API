@@ -4,15 +4,23 @@ const {
   isIndonesiaPhoneNumber,
 } = require('../helpers/helpers')
 
-const home = (request, response) => response.json({ status: true, message: 'OK' })
+const home = (_, response) => response.json({ status: true, message: 'OK' })
 
-const passwordValidator = (request, response, next) => {
-  const { password } = request.body
+// Abstract function for validators
+const validatorAbstractFunction = (
+  request,
+  response,
+  next,
+  fieldName,
+  errorMessage,
+  isFieldValid,
+) => {
+  const fieldValue = request.body[fieldName]
 
-  if (!password || !isPasswordValid(password)) {
+  if (!fieldValue || !isFieldValid(fieldValue)) {
     response.status(400).json({
       status: false,
-      message: 'invalid password',
+      message: errorMessage,
     })
     return
   }
@@ -20,22 +28,26 @@ const passwordValidator = (request, response, next) => {
   next()
 }
 
+const passwordValidator = (request, response, next) => {
+  validatorAbstractFunction(
+    request,
+    response,
+    next,
+    'password',
+    'invalid password',
+    isPasswordValid,
+  )
+}
+
 const noTeleponValidator = (request, response, next) => {
-  const { noTelepon } = request.body
-
-  if (!noTelepon || !isIndonesiaPhoneNumber(noTelepon)) {
-    response.status(400).json({
-      status: false,
-      message: 'invalid phone number',
-    })
-    return
-  }
-
-  if (noTelepon.startsWith('+62')) {
-    request.body.noTelepon = noTelepon.replace('+62', '62')
-  }
-
-  next()
+  validatorAbstractFunction(
+    request,
+    response,
+    next,
+    'noTelepon',
+    'invalid phone number',
+    isIndonesiaPhoneNumber,
+  )
 }
 
 // Abstract function for checking the existences of the some field
@@ -58,12 +70,24 @@ const checkFieldExistence = async (request, response, next, fieldName, errorMess
 
 // Usage for checking username existence
 const checkUsernameExistence = async (request, response, next) => {
-  await checkFieldExistence(request, response, next, 'username', 'username is already exist')
+  await checkFieldExistence(
+    request,
+    response,
+    next,
+    'username',
+    'username is already exist',
+  )
 }
 
 // Usage for checking phone number existence
 const checkPhoneNumberExistence = async (request, response, next) => {
-  await checkFieldExistence(request, response, next, 'noTelepon', 'noTelepon is already exist')
+  await checkFieldExistence(
+    request,
+    response,
+    next,
+    'noTelepon',
+    'noTelepon is already exist',
+  )
 }
 
 module.exports = {

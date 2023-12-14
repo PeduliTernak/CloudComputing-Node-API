@@ -18,8 +18,7 @@ const isPasswordValid = (password) => password.length >= 8 && isASCIIOnly(passwo
 
 const isIndonesiaPhoneNumber = (phoneNumber) => {
   const noTelpRegex = /^62\d{9,15}$/
-  const noTelpRegexWithPlus = /^\+62\d{9,15}$/
-  return noTelpRegex.test(phoneNumber) || noTelpRegexWithPlus.test(phoneNumber)
+  return noTelpRegex.test(phoneNumber)
 }
 
 const getImageName = (predictionHistory, bucket = BUCKET) => {

@@ -194,7 +194,7 @@ Otherwise, the request will response 401 Unauthorized
 
 - **Status: 400 Bad Request**
 
-  - Phone number must start with +62 or 62
+  - Phone number must starts with 62
   - Phone number minimum length must be to 9 characters
   - Phone number maximum length must be to 15 characters
 

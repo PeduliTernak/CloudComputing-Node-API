@@ -84,11 +84,6 @@ describe('isPasswordValid', () => {
 })
 
 describe('isIndonesiaPhoneNumber', () => {
-  it('should return true for a valid Indonesian phone number w+', () => {
-    const result = isIndonesiaPhoneNumber('+6281234567890')
-    expect(result).toBe(true)
-  })
-
   it('should return true for a valid Indonesian phone number', () => {
     const result = isIndonesiaPhoneNumber('6281234567890')
     expect(result).toBe(true)
@@ -100,27 +95,17 @@ describe('isIndonesiaPhoneNumber', () => {
   })
 
   it('should return false for a phone number with an incorrect country code', () => {
-    const result = isIndonesiaPhoneNumber('+6091234567890')
+    const result = isIndonesiaPhoneNumber('6091234567890')
     expect(result).toBe(false)
   })
 
   it('should return false for a phone number with alphabetic characters', () => {
-    const result = isIndonesiaPhoneNumber('+62abc123456')
-    expect(result).toBe(false)
-  })
-
-  it('should return false for a phone number with less than 9 digits w+', () => {
-    const result = isIndonesiaPhoneNumber('+62812345')
+    const result = isIndonesiaPhoneNumber('62abc123456')
     expect(result).toBe(false)
   })
 
   it('should return false for a phone number with less than 9 digits', () => {
     const result = isIndonesiaPhoneNumber('62812345')
-    expect(result).toBe(false)
-  })
-
-  it('should return false for a phone number with more than 15 digits w+', () => {
-    const result = isIndonesiaPhoneNumber('+628123456789012345')
     expect(result).toBe(false)
   })
 

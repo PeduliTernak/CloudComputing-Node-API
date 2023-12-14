@@ -25,7 +25,7 @@ const performImagePrediction = async (request, response, next) => {
 
   // Configure form-data
   const formData = new FormData()
-  formData.append('file', blob, { filename: 'image.jpg' })
+  formData.append('file', blob, { filename: request.file.originalname })
   formData.append('gejala_matrix', request.body.gejala_matrix)
 
   // Send request to Python-Flask app
