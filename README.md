@@ -1,12 +1,12 @@
 # PeduliTernak - Node.js Backend
 
-This repository contains the Node.js backend for the PeduliTernak project, encompassing implementation of public endpoints gateway, database connection, and user administration. The backend allows users to create an account and **detect disease in cattle** (perform image predictions) using API request methods.
+This repository contains the Node.js backend for the PeduliTernak project, encompassing implementation of public endpoints gateway, database connection, and user administration. The backend allows users to create an account and **detect disease in cattle** (perform image recognition and get survey prediction) using API request methods.
 
 ## How it works
 
 This application is connected to the Firestore Database, Cloud Storage, and Cloud Run microservice.
 
-When a client makes prediction requests, this application synchronously sends requests to the private [Cloud Run microservice](https://cloud.google.com/run/docs/authenticating/service-to-service) to perform image recognition (because the ML Model is deployed there). The results are then stored in the database and returned to the client as a response.
+When a client makes prediction requests, this application synchronously sends requests to the private [Cloud Run microservice](https://cloud.google.com/run/docs/authenticating/service-to-service) to perform recognition (because the ML Models is deployed there). The results are then stored in the database and returned to the client as a response.
 
 ![Cloud Architecture Design](https://github.com/PeduliTernak/assets/blob/main/architecture-cloud-design.png?raw=true)
 
