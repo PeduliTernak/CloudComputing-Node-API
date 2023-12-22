@@ -6,7 +6,7 @@ This repository contains the Node.js backend for the PeduliTernak project, encom
 
 This application is connected to the Firestore Database, Cloud Storage, and Cloud Run microservice.
 
-When a client makes prediction requests, this application synchronously sends requests to the private [Cloud Run microservice](https://cloud.google.com/run/docs/authenticating/service-to-service) to perform recognition (because the ML Models is deployed there). The results are then stored in the database and returned to the client as a response.
+When a client makes prediction requests, this application synchronously sends requests to the private [Cloud Run microservice](https://cloud.google.com/run/docs/authenticating/service-to-service) to perform recognition (because the ML Models are deployed there). The results are then stored in the database and returned to the client as a response.
 
 ![Cloud Architecture Design](https://github.com/PeduliTernak/assets/blob/main/architecture-cloud-design.png?raw=true)
 
